@@ -8,8 +8,11 @@
     port: 3001
   services:
     - 
-      name: ssh
+      name: SSH
       port: 22
     - 
-      name: http
+      name: HTTP
       port: 80
+    -
+      name: FTP
+      port: 21
