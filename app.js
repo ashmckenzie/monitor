@@ -53,16 +53,24 @@ function check_services(socket) {
 
   for (var i=0; i <= (services_count - 1); i++) {
     var callback = function(service, status) {
-      data.push({ 'name': service.name, 'status': status } );
+      data.push({ 'id': count, 'name': service.name, 'status': status } );
       count--;
       if (count == 0) {
-        socket.emit('message', data);
+        socket.emit('message', data.sort(compare));
       }
     }
     check_port(config.services[i].port, host, config.services[i], socket, callback);
   }
 
-  setTimeout(check_services, 5000, socket);
+  setTimeout(check_services, 1000, socket);
+}
+
+function compare(a,b) {
+  if (a.id < b.id)
+     return -1;
+  if (a.id > b.id)
+    return 1;
+  return 0;
 }
 
 function check_port(port, host, service, socket, callback) {
